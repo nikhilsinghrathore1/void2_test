@@ -1,0 +1,531 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Enhanced Vibrant Color Palette */
+    --sky-light: #87ceeb;
+    --sky-lavender: #e6e6fa;
+
+    /* Improved soil and earth tones */
+    --soil-warm: #a0522d;
+    --soil-dark: #8b4513;
+    --grass-vibrant: #78c850;
+    --grass-dark: #228b22;
+    --grass-highlight: #32cd32;
+
+    /* Enhanced crop colors */
+    --crop-lush: #32cd32;
+    --crop-harvest: #ffd700;
+    --crop-growing: #78c850;
+
+    /* Improved water system */
+    --water-crystal: #00bfff;
+    --water-deep: #1e90ff;
+
+    /* Enhanced tree colors */
+    --pine-dark: #228b22;
+    --pine-medium: #32cd32;
+    --pine-light: #78c850;
+    --trunk-brown: #a0522d;
+    --trunk-dark: #8b4513;
+
+    /* Price tier colors */
+    --price-cheap: #90ee90;
+    --price-moderate: #ffd700;
+    --price-expensive: #ffa500;
+    --price-premium: #ff6347;
+
+    --gold-gentle: #ffd700;
+    --ui-glass: rgba(255, 255, 255, 0.15);
+    --button-active: #98fb98;
+    --text-primary: #2f4f4f;
+    --text-secondary: #696969;
+
+    /* Enhanced Sage Palette */
+    --sage-50: #f0fdf4;
+    --sage-100: #dcfce7;
+    --sage-200: #bbf7d0;
+    --sage-300: var(--grass-vibrant);
+    --sage-400: #4ade80;
+    --sage-500: #22c55e;
+    --sage-600: var(--crop-lush);
+    --sage-700: #15803d;
+    --sage-800: var(--text-primary);
+    --sage-900: #14532d;
+
+    /* Water System */
+    --water-50: #f0f9ff;
+    --water-100: #e0f2fe;
+    --water-200: #bae6fd;
+    --water-300: var(--water-crystal);
+    --water-400: #38bdf8;
+    --water-500: #0ea5e9;
+    --water-600: #0284c7;
+    --water-700: #0369a1;
+    --water-800: #075985;
+    --water-900: #0c4a6e;
+
+    /* Enhanced Earth Tones */
+    --earth-50: #fefce8;
+    --earth-100: #fef3c7;
+    --earth-200: #fde68a;
+    --earth-300: var(--soil-warm);
+    --earth-400: #ca8a04;
+    --earth-500: var(--trunk-brown);
+    --earth-600: #92400e;
+    --earth-700: #78350f;
+    --earth-800: #451a03;
+    --earth-900: #292524;
+
+    /* Vibrant Accent Colors */
+    --accent-green: #32cd32;
+    --accent-blue: #00bfff;
+    --accent-orange: #ffa500;
+    --accent-red: #ff6347;
+    --accent-purple: #9370db;
+    --accent-yellow: #ffd700;
+
+    /* Design System Updates */
+    --background: linear-gradient(135deg, var(--sky-light), var(--sky-lavender));
+    --foreground: var(--text-primary);
+    --card: var(--ui-glass);
+    --card-foreground: var(--text-primary);
+    --popover: rgba(255, 255, 255, 0.95);
+    --popover-foreground: var(--text-primary);
+    --primary: var(--crop-lush);
+    --primary-foreground: white;
+    --secondary: var(--button-active);
+    --secondary-foreground: var(--text-primary);
+    --muted: var(--grass-vibrant);
+    --muted-foreground: var(--text-secondary);
+    --accent: var(--gold-gentle);
+    --accent-foreground: var(--text-primary);
+    --destructive: #f87171;
+    --destructive-foreground: white;
+    --border: rgba(255, 255, 255, 0.25);
+    --input: rgba(255, 255, 255, 0.15);
+    --ring: var(--crop-lush);
+    --radius: 1rem;
+
+    /* Enhanced Glass Effects with Better Depth */
+    --glass-bg: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.25);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    --glass-bloom: 0 0 30px rgba(135, 206, 235, 0.4);
+    --depth-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .dark {
+    --background: linear-gradient(135deg, #1e1b4b, #581c87);
+    --foreground: var(--sage-50);
+    --card: rgba(0, 0, 0, 0.4);
+    --card-foreground: var(--sage-100);
+    --popover: rgba(0, 0, 0, 0.8);
+    --popover-foreground: var(--sage-100);
+    --primary: var(--sage-400);
+    --primary-foreground: var(--sage-900);
+    --secondary: var(--sage-800);
+    --secondary-foreground: var(--sage-200);
+    --muted: var(--sage-800);
+    --muted-foreground: var(--sage-400);
+    --accent: var(--sage-700);
+    --accent-foreground: var(--sage-200);
+    --destructive: var(--rose-400);
+    --destructive-foreground: var(--sage-900);
+    --border: var(--sage-700);
+    --input: var(--sage-800);
+    --ring: var(--sage-500);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    background: linear-gradient(135deg, #87ceeb, #e6e6fa);
+    @apply text-foreground;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-feature-settings: "kern" 1, "liga" 1;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
+  }
+}
+
+/* Enhanced Component Styles with Better Depth and Vibrant Colors */
+@layer components {
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(1.3);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow), var(--glass-bloom), var(--depth-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  .glass-card-transparent {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(15px) saturate(1.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 0 25px rgba(135, 206, 235, 0.3), inset 0 1px 0
+      rgba(255, 255, 255, 0.25);
+  }
+
+  .vibrant-glow {
+    filter: drop-shadow(0 0 20px rgba(120, 200, 80, 0.5)) drop-shadow(0 0 40px rgba(50, 205, 50, 0.3));
+  }
+
+  .depth-shadow {
+    box-shadow: var(--depth-shadow);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--crop-lush), var(--grass-vibrant));
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 1rem;
+    box-shadow: var(--depth-shadow), 0 0 25px rgba(50, 205, 50, 0.4);
+    border: none;
+    transform: scale(1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, var(--grass-vibrant), var(--grass-dark));
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2), 0 0 35px rgba(50, 205, 50, 0.6);
+    transform: scale(1.05) translateY(-3px);
+  }
+
+  .btn-secondary {
+    background: linear-gradient(135deg, var(--button-active), #90ee90);
+    color: var(--text-primary);
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 1rem;
+    box-shadow: var(--depth-shadow), 0 0 20px rgba(152, 251, 152, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    transform: scale(1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-success {
+    background: linear-gradient(135deg, #32cd32, #228b22);
+    color: white;
+    font-weight: 600;
+    box-shadow: var(--depth-shadow), 0 0 25px rgba(50, 205, 50, 0.5);
+  }
+
+  .btn-harvest {
+    background: linear-gradient(135deg, var(--crop-harvest), #ffa500);
+    color: var(--text-primary);
+    font-weight: 600;
+    box-shadow: var(--depth-shadow), 0 0 25px rgba(255, 215, 0, 0.6);
+  }
+
+  /* Enhanced Price Tier Colors */
+  .price-cheap {
+    background: linear-gradient(135deg, var(--price-cheap), #98fb98);
+    color: #006400;
+    border: 2px solid #90ee90;
+  }
+
+  .price-moderate {
+    background: linear-gradient(135deg, var(--price-moderate), #ffff99);
+    color: #b8860b;
+    border: 2px solid #ffd700;
+  }
+
+  .price-expensive {
+    background: linear-gradient(135deg, var(--price-expensive), #ffb347);
+    color: #ff4500;
+    border: 2px solid #ffa500;
+  }
+
+  .price-premium {
+    background: linear-gradient(135deg, var(--price-premium), #ff7f7f);
+    color: #8b0000;
+    border: 2px solid #ff6347;
+  }
+
+  /* Enhanced Tile Glow Effects with Vibrant Colors */
+  .tile-glow-soft {
+    box-shadow: 0 0 30px rgba(120, 200, 80, 0.7), 0 0 60px rgba(120, 200, 80, 0.4), var(--depth-shadow);
+    animation: vibrant-pulse 3s ease-in-out infinite;
+  }
+
+  .tile-glow-harvest {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.5), var(--depth-shadow);
+    animation: vibrant-pulse 2.5s ease-in-out infinite;
+  }
+
+  .tile-glow-water {
+    box-shadow: 0 0 30px rgba(0, 191, 255, 0.8), 0 0 60px rgba(0, 191, 255, 0.5), var(--depth-shadow);
+    animation: water-shimmer-vibrant 4s ease-in-out infinite;
+  }
+
+  .tile-bounce {
+    animation: tile-bounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .tree-depth-variation {
+    filter: brightness(1.05) saturate(1.3) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  }
+
+  .ambient-occlusion {
+    box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Enhanced Animations with More Vibrant Effects */
+@keyframes vibrant-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: brightness(1) saturate(1.2);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.05);
+    filter: brightness(1.1) saturate(1.4);
+  }
+}
+
+@keyframes water-shimmer-vibrant {
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: scale(1) rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
+  25% {
+    opacity: 0.95;
+    transform: scale(1.03) rotate(1deg);
+    filter: hue-rotate(10deg);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.01) rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
+  75% {
+    opacity: 0.95;
+    transform: scale(1.03) rotate(-1deg);
+    filter: hue-rotate(-10deg);
+  }
+}
+
+@keyframes tile-bounce {
+  0% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.1) translateY(-10px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes confetti-gentle {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes scale-in {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Enhanced Color Utilities with Vibrant Palette */
+.bg-grass-vibrant {
+  background-color: var(--grass-vibrant);
+}
+.bg-grass-dark {
+  background-color: var(--grass-dark);
+}
+.bg-grass-highlight {
+  background-color: var(--grass-highlight);
+}
+.bg-soil-warm {
+  background-color: var(--soil-warm);
+}
+.bg-soil-dark {
+  background-color: var(--soil-dark);
+}
+.bg-crop-lush {
+  background-color: var(--crop-lush);
+}
+.bg-crop-harvest {
+  background-color: var(--crop-harvest);
+}
+.bg-crop-growing {
+  background-color: var(--crop-growing);
+}
+.bg-water-crystal {
+  background-color: var(--water-crystal);
+}
+.bg-water-deep {
+  background-color: var(--water-deep);
+}
+.bg-trunk-brown {
+  background-color: var(--trunk-brown);
+}
+.bg-trunk-dark {
+  background-color: var(--trunk-dark);
+}
+
+/* Text colors */
+.text-grass-vibrant {
+  color: var(--grass-vibrant);
+}
+.text-grass-dark {
+  color: var(--grass-dark);
+}
+.text-soil-warm {
+  color: var(--soil-warm);
+}
+.text-crop-lush {
+  color: var(--crop-lush);
+}
+.text-water-crystal {
+  color: var(--water-crystal);
+}
+.text-primary {
+  color: var(--text-primary);
+}
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+/* Enhanced Gradients with Vibrant Colors */
+.gradient-sky {
+  background: linear-gradient(135deg, var(--sky-light), var(--sky-lavender));
+}
+
+.gradient-grass {
+  background: linear-gradient(135deg, var(--grass-vibrant), var(--grass-highlight));
+}
+
+.gradient-earth {
+  background: linear-gradient(135deg, var(--soil-warm), var(--soil-dark));
+}
+
+.gradient-water {
+  background: linear-gradient(135deg, var(--water-crystal), var(--water-deep));
+}
+
+.gradient-harvest {
+  background: linear-gradient(135deg, var(--crop-harvest), var(--accent-orange));
+}
+
+.gradient-forest {
+  background: linear-gradient(135deg, var(--pine-dark), var(--pine-medium));
+}
+
+.gradient-vibrant-green {
+  background: linear-gradient(135deg, var(--grass-vibrant), var(--crop-lush));
+}
+
+.gradient-autumn {
+  background: linear-gradient(135deg, #ff8c00, #ffd700);
+}
+
+/* Enhanced 3D Effects */
+.depth-layer-1 {
+  filter: brightness(1.1) saturate(1.2) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+.depth-layer-2 {
+  filter: brightness(1.05) saturate(1.15) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}
+.depth-layer-3 {
+  filter: brightness(1) saturate(1.1) drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2));
+}
+
+canvas {
+  outline: none;
+  filter: brightness(1.05) saturate(1.15) contrast(1.05);
+}
+
+.game-ui {
+  pointer-events: none;
+}
+
+.game-ui > * {
+  pointer-events: auto;
+}
+
+/* Enhanced transitions with better easing */
+* {
+  transition:
+    color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Focus styles with vibrant glow */
+*:focus-visible {
+  outline: 2px solid var(--crop-lush);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(50, 205, 50, 0.3);
+}
+
+/* Enhanced scrollbar with vibrant colors */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: linear-gradient(to bottom, var(--sky-light), var(--sky-lavender));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--grass-vibrant), var(--crop-lush));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, var(--crop-lush), var(--grass-dark));
+}
