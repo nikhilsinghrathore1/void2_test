@@ -5,7 +5,6 @@ import { Canvas, useFrame } from "@react-three/fiber"
 import { Box, Cylinder, Plane, Sky, useGLTF } from "@react-three/drei"
 import { Tree } from "@/components/trees"
 import { useGame } from "@/components/context/game-context"
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { GroupProps } from '@react-three/fiber'
 
 interface Tile {
@@ -151,7 +150,7 @@ function GameTile({
   onPlantInteraction?: (tileId: string, screenPosition: { x: number; y: number }) => void
   onTileTransaction?: (tileId: string, type: "buy" | "sell") => void
 }) {
-  const meshRef = useRef<any>()
+  const meshRef = useRef()
   const { gameState } = useGame()
   const [hovered, setHovered] = useState(false)
   const [growthStage, setGrowthStage] = useState(0)
@@ -633,6 +632,7 @@ function House(props: GroupProps) {
 
   return <primitive object={gltf.scene} scale={4} {...props} />
 }
+
 function House2(props: GroupProps) {
   const gltf = useGLTF('/bigTent.glb')
 
@@ -657,6 +657,7 @@ function House3(props: GroupProps) {
 
   return <primitive object={gltf.scene} scale={4} {...props} />
 }
+
 function House4(props: GroupProps) {
   const gltf = useGLTF('/bigTent2.glb')
 
@@ -669,6 +670,32 @@ function House4(props: GroupProps) {
 
   return <primitive object={gltf.scene} scale={4} {...props} />
 }
+function House5(props: GroupProps) {
+  const gltf = useGLTF('/bigTent2.glb')
+
+  useEffect(() => {
+    gltf.scene.traverse((child) => {
+      if ('castShadow' in child) child.castShadow = true
+      if ('receiveShadow' in child) child.receiveShadow = true
+    })
+  }, [gltf])
+
+  return <primitive object={gltf.scene} scale={4} {...props} />
+}
+function House6(props: GroupProps) {
+  const gltf = useGLTF('/bigTent2.glb')
+
+  useEffect(() => {
+    gltf.scene.traverse((child) => {
+      if ('castShadow' in child) child.castShadow = true
+      if ('receiveShadow' in child) child.receiveShadow = true
+    })
+  }, [gltf])
+
+  return <primitive object={gltf.scene} scale={4} {...props} />
+}
+
+
 function Tree(props: GroupProps) {
   const gltf = useGLTF('/tree.glb')
 
@@ -682,6 +709,18 @@ function Tree(props: GroupProps) {
   return <primitive object={gltf.scene} scale={4} {...props} />
 }
 function Campfire(props: GroupProps) {
+  const gltf = useGLTF('/campfire.glb')
+
+  useEffect(() => {
+    gltf.scene.traverse((child) => {
+      if ('castShadow' in child) child.castShadow = true
+      if ('receiveShadow' in child) child.receiveShadow = true
+    })
+  }, [gltf])
+
+  return <primitive object={gltf.scene} scale={10} {...props} />
+}
+function Pond(props: GroupProps) {
   const gltf = useGLTF('/campfire.glb')
 
   useEffect(() => {
@@ -760,6 +799,7 @@ export default function GameWorld({
       <GroundPlane />
 
       {/* Decorative elements */}
+
       <DecorationElements />
       <ambientLight intensity={0.5} />
       <directionalLight
@@ -772,7 +812,7 @@ export default function GameWorld({
         shadow-camera-right={50}
         shadow-camera-top={50}
         shadow-camera-bottom={-50}
-      />
+        />
 
       {/* Optional: Realistic sky */}
       <Sky sunPosition={[100, 100, 100]} />
@@ -781,13 +821,17 @@ export default function GameWorld({
 
       {/* Houses near corners */}
       <Suspense fallback={null}>
-        <House position={[13, 0, 13]} />
+        <House position={[16, 0, 16]}/>
         <House2 position={[-13, 0, 13]} />
         <House3 position={[13, 0, -13]} />
         <House4 position={[-13, 0, -13]} />
+        <House5 position={[15, 0, -16]} />
+        <House6 position={[-15, 0, -16]} />
+       <Pond position={[10,0, 10]} />
         <Tree position={[-13, 0, -16]}/>
         <Campfire position={[-11, 0, -10]}/>
         <Cactus position={[-10, 0, -16]}/>
+        {/* <Pond position={[0, 0, 0]}/> */}
       </Suspense>
 
       {/* Weather system */}
