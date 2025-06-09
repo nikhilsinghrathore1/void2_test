@@ -24,6 +24,8 @@ import {
   Heart,
   Leaf,
   Sparkles,
+  Power,
+  Factory,
 } from "lucide-react"
 
 interface GameHUDProps {
@@ -37,14 +39,14 @@ export default function GameHUD({ selectedTool, setSelectedTool, message }: Game
   const { gameState, setCurrentScreen, currentScreen } = useGame()
 
   const tools = [
-    {
-      id: "move" as const,
-      name: "Explore",
-      icon: Navigation,
-      gradientClass: "gradient-sage",
-      description: "WASD: Explore your world",
-      cost: null,
-    },
+    // {
+    //   id: "move" as const,
+    //   name: "Explore",
+    //   icon: Navigation,
+    //   gradientClass: "gradient-sage",
+    //   description: "WASD: Explore your world",
+    //   cost: null,
+    // },
     {
       id: "buy" as const,
       name: "Claim Land",
@@ -63,10 +65,10 @@ export default function GameHUD({ selectedTool, setSelectedTool, message }: Game
     },
     {
       id: "tree" as const,
-      name: "Plant Trees",
-      icon: TreePine,
+      name: "power plant ",
+      icon: Factory,
       gradientClass: "gradient-forest",
-      description: "Click land to plant trees",
+      description: "Click plant a power plant",
       cost: 15,
     },
     {
@@ -253,7 +255,7 @@ export default function GameHUD({ selectedTool, setSelectedTool, message }: Game
           </div>
 
           {/* Farm Stats */}
-          <Card className="absolute top-24 right-6 glass-card border-2 border-sage-200/50 z-10 shadow-lg">
+          {/* <Card className="absolute top-24 right-6 glass-card border-2 border-sage-200/50 z-10 shadow-lg">
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2 text-sage-800">
                 <TreePine className="w-5 h-5 text-sage-600" />
@@ -299,7 +301,7 @@ export default function GameHUD({ selectedTool, setSelectedTool, message }: Game
                 </div>
               </div>
             </CardContent>
-          </Card>
+          </Card> */}
 
           {/* Tools Panel */}
           <div className="absolute top-40 left-6 z-10">
@@ -309,19 +311,19 @@ export default function GameHUD({ selectedTool, setSelectedTool, message }: Game
                   <Heart className="w-5 h-5 text-rose-400" />
                   Farming Tools
                 </CardTitle>
-                <p className="text-sm text-center text-sage-600 font-medium">
+                {/* <p className="text-sm text-center text-sage-600 font-medium">
                   Choose your tool, then interact with the world!
-                </p>
+                </p> */}
               </CardHeader>
-              <CardContent className="p-4">
-                <div className="space-y-4">
+              <CardContent className="p-4  overflow-y-auto">
+                <div className="space-y-4 overflow-y-auto">
                   {tools.map((tool) => {
                     const Icon = tool.icon
                     const isSelected = selectedTool === tool.id
                     const canAfford = !tool.cost || gameState.resources.gold >= tool.cost
 
                     return (
-                      <div key={tool.id} className="flex items-center gap-4">
+                      <div key={tool.id} className="flex overflow-y-auto items-center gap-4">
                         <Button
                           variant={isSelected ? "default" : "outline"}
                           size="lg"
@@ -349,7 +351,7 @@ export default function GameHUD({ selectedTool, setSelectedTool, message }: Game
                     )
                   })}
 
-                  <div className="mt-6 p-4 bg-gradient-to-br from-lavender-50 to-lavender-100 rounded-2xl border border-lavender-200/50">
+                  {/* <div className="mt-24 p-4 bg-gradient-to-br from-lavender-50 to-lavender-100 rounded-2xl border border-lavender-200/50">
                     <div className="flex items-center gap-2 mb-2">
                       <Sparkles className="w-4 h-4 text-lavender-600" />
                       <span className="font-semibold text-lavender-800">Pro Tips!</span>
@@ -357,7 +359,7 @@ export default function GameHUD({ selectedTool, setSelectedTool, message }: Game
                     <div className="text-xs text-lavender-700 leading-relaxed">
                       Plant trees to beautify your farm! Each tree type has unique benefits and visual appeal.
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </CardContent>
             </Card>
@@ -370,7 +372,7 @@ export default function GameHUD({ selectedTool, setSelectedTool, message }: Game
                 <div className="text-sm">
                   <div className="font-semibold text-emerald-700 mb-1">Currently Active:</div>
                   <div className="text-sage-700 leading-relaxed">
-                    {selectedTool === "move" && "🌟 Explore Mode - Use WASD keys to wander your farm"}
+                    {/* {selectedTool === "move" && "🌟 Explore Mode - Use WASD keys to wander your farm"} */}
                     {selectedTool === "buy" && "🌱 Land Claiming - Click empty tiles to claim them (20g)"}
                     {selectedTool === "plant" && "🌿 Seed Planting - Click your land to plant crops (10g)"}
                     {selectedTool === "tree" && "🌲 Tree Planting - Click your land to plant beautiful trees (15g+)"}

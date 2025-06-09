@@ -6,7 +6,7 @@ import { OrbitControls, Sky } from "@react-three/drei"
 import { Suspense } from "react"
 import GameWorld from "@/components/game-world"
 import { Tree, TreeGroup, PineForest } from "@/components/trees"
-import { CharacterGroup } from "@/components/characters"
+// import { CharacterGroup } from "@/components/characters"
 import GameHUD from "@/components/ui/game-hud"
 import BuildMode from "@/components/ui/build-mode"
 import FarmMode from "@/components/ui/farm-mode"
@@ -378,7 +378,7 @@ function GameContent() {
           <Tree position={[0, 0, 18]} type="pine" scale={1.3} />
 
           {/* Voxel characters - positioned naturally */}
-          <CharacterGroup position={[-10, 0, 10]} count={1} />
+          {/* <CharacterGroup position={[-10, 0, 10]} count={1} /> */}
         </Suspense>
       </Canvas>
 

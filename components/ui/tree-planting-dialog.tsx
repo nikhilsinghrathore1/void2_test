@@ -15,41 +15,16 @@ interface TreePlantingDialogProps {
 
 const treeTypes = [
   {
-    id: "pine",
-    name: "Pine Tree",
+    id: "power",
+    name: "power plant",
     icon: "🌲",
     cost: 15,
-    description: "A majestic evergreen that grows tall and provides excellent shade",
+    description: "A majestic power plant that gives electricity and provides excellent shade",
     growthTime: "Instant",
     benefits: "Increases tile beauty, provides shade",
   },
-  {
-    id: "oak",
-    name: "Oak Tree",
-    icon: "🌳",
-    cost: 20,
-    description: "A sturdy deciduous tree perfect for creating natural boundaries",
-    growthTime: "Instant",
-    benefits: "Attracts wildlife, seasonal color changes",
-  },
-  {
-    id: "palm",
-    name: "Palm Tree",
-    icon: "🌴",
-    cost: 25,
-    description: "An exotic tropical tree that adds a vacation vibe to your farm",
-    growthTime: "Instant",
-    benefits: "Unique aesthetic, wind resistance",
-  },
-  {
-    id: "fancy",
-    name: "Magical Tree",
-    icon: "✨",
-    cost: 50,
-    description: "A mystical tree that glows with magical energy",
-    growthTime: "Instant",
-    benefits: "Magical glow, enhances nearby crops",
-  },
+
+  
 ]
 
 export default function TreePlantingDialog({ isOpen, onClose, tileId, position }: TreePlantingDialogProps) {
@@ -142,9 +117,9 @@ export default function TreePlantingDialog({ isOpen, onClose, tileId, position }
   if (!isOpen || !tile) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm">
-      <div className="animate-scale-in">
-        <Card className="w-full max-w-lg glass-card-transparent border-2 border-sage-200/30 shadow-2xl relative overflow-hidden">
+    <div className="fixed inset-0 z-50 flex  items-center justify-center bg-black/20 overflow-auto backdrop-blur-sm">
+      <div className="animate-scale-in overflow-auto">
+        <Card className="w-full max-w-lg h-fit glass-card-transparent border-2 border-sage-200/30 shadow-2xl relative overflow-y-auto">
           {/* Success confetti effect */}
           {isSuccess && (
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -183,9 +158,9 @@ export default function TreePlantingDialog({ isOpen, onClose, tileId, position }
             <p className="text-sage-600 mt-2">Choose a beautiful tree to enhance your farm's natural beauty</p>
           </CardHeader>
 
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-6 overflow-y-auto ">
             {/* Tree Type Selection */}
-            <div className="space-y-4">
+            <div className="space-y-4 ">
               <h3 className="font-semibold text-sage-700 text-lg">Select Tree Type:</h3>
               <div className="grid grid-cols-2 gap-3">
                 {treeTypes.map((tree) => (

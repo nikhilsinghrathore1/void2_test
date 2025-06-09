@@ -147,7 +147,7 @@ function GroundPlane() {
       })}
 
       {/* Stone path */}
-      {Array.from({ length: 12 }, (_, i) => (
+      {/* {Array.from({ length: 12 }, (_, i) => (
         <Cylinder
           key={i}
           args={[0.3, 0.3, 0.1]}
@@ -164,7 +164,7 @@ function GroundPlane() {
             emissiveIntensity={0.12}
           />
         </Cylinder>
-      ))}
+      ))} */}
 
       {/* Water features */}
       {Array.from({ length: 5 }, (_, i) => (
@@ -298,6 +298,12 @@ function MoneyTree() {
   )
 }
 
+function GLBpowerModel({ path }: { path: string }) {
+  const gltf = useGLTF(path)
+
+  return <primitive object={gltf.scene} scale={1.5} />
+}
+
 function WaterTile() {
   return (
     <group position={[0, 0.1, 0]}>
@@ -348,6 +354,33 @@ function ToolIndicator({ tool, position }: { tool: string; position: [number, nu
   )
 }
 
+// function GLBTreeModel({ path }: { path: string }) {
+//   const gltf = useGLTF(path)
+//   return <primitive object={gltf.scene} scale={0.08} />
+// }
+
+export function GLBTreeModel({ path }: { path: string }) {
+  const gltf = useGLTF(path)
+
+  // Clone the gltf.scene so each instance is separate
+  const clonedScene = useMemo(() => {
+    const clone = gltf.scene.clone(true)
+    clone.traverse((child) => {
+      if (child instanceof THREE.Mesh) {
+        child.material = child.material.clone()
+      }
+    })
+    return clone
+  }, [gltf])
+
+  return <primitive object={clonedScene} scale={0.17} />
+}
+// Mapping treeType to model path
+const treeGLBPaths: Record<string, string> = {
+  power: "/power1.glb",
+ 
+}
+
 function GameTile({
   tile,
   onClick,
@@ -366,14 +399,20 @@ function GameTile({
   const [plantScale, setPlantScale] = useState(0.3)
   const [tileEffect, setTileEffect] = useState<"purchase" | "sale" | null>(null)
   const [bounce, setBounce] = useState(false)
+  const [isPurchased, setIsPurchased] = useState(false)
 
   const playerName = mockGameState.player.name
 
-  // Memoize colors to prevent unnecessary recalculations
-  const tileColor = useMemo(() => getTileColor(tile), [tile])
+  const tileColor = useMemo(() => {
+    // If tile was purchased by player or is owned by player and is land type, make it brown
+    if (isPurchased || (tile.owner === playerName && tile.type === "land")) {
+      return "#8B4513" // Brown color
+    }
+    return getTileColor(tile)
+  }, [tile, playerName, isPurchased])
+  
   const hoverColor = useMemo(() => getHoverColor(selectedTool, tile, playerName), [selectedTool, tile, playerName])
 
-  // Handle growth stages and plant scale
   useEffect(() => {
     if (tile.type === "crop") {
       const targetScale = 0.3 + (tile.growth / 100) * 0.7
@@ -381,18 +420,14 @@ function GameTile({
     }
   }, [tile.growth])
 
-  // Animation frame
   useFrame((state) => {
     if (meshRef.current && tile.position) {
-      // Floating animation for crops and trees
       if (tile.type === "crop" || tile.type === "money-tree" || tile.type === "tree") {
         meshRef.current.position.y = tile.position[1] + Math.sin(state.clock.elapsedTime * 2 + tile.position[0]) * 0.03
       }
-      // Water ripple effect
       if (tile.type === "water") {
         meshRef.current.position.y = tile.position[1] + Math.sin(state.clock.elapsedTime * 3 + tile.position[0] * 2) * 0.02
       }
-      // Bounce effect
       if (bounce) {
         meshRef.current.position.y = tile.position[1] + Math.abs(Math.sin(state.clock.elapsedTime * 5)) * 0.2
       }
@@ -402,11 +437,11 @@ function GameTile({
   const handleClick = useCallback((event: THREE.Event) => {
     onClick()
 
-    // Handle transactions
     if (selectedTool === "buy" && onTileTransaction) {
       if (tile.type === "empty") {
         setTileEffect("purchase")
         setBounce(true)
+        setIsPurchased(true) // Mark as purchased immediately
         setTimeout(() => {
           setTileEffect(null)
           setBounce(false)
@@ -415,6 +450,7 @@ function GameTile({
       } else if (tile.owner === playerName && tile.type === "land") {
         setTileEffect("sale")
         setBounce(true)
+        setIsPurchased(false) // Mark as not purchased when sold
         setTimeout(() => {
           setTileEffect(null)
           setBounce(false)
@@ -423,7 +459,6 @@ function GameTile({
       }
     }
 
-    // Handle plant interaction
     if (tile.type === "crop" && onPlantInteraction) {
       const mouseEvent = event as any
       onPlantInteraction(tile.id, { 
@@ -436,8 +471,8 @@ function GameTile({
   const handlePointerOver = useCallback((e: THREE.Event) => {
     const target = e.object as THREE.Mesh
     if (target.material && 'color' in target.material) {
-      ;(target.material as THREE.MeshStandardMaterial).color.set(hoverColor)
-      ;(target.material as THREE.MeshStandardMaterial).emissiveIntensity = 0.25
+      (target.material as THREE.MeshStandardMaterial).color.set(hoverColor)
+      (target.material as THREE.MeshStandardMaterial).emissiveIntensity = 0.25
     }
     setHovered(true)
   }, [hoverColor])
@@ -445,13 +480,12 @@ function GameTile({
   const handlePointerOut = useCallback((e: THREE.Event) => {
     const target = e.object as THREE.Mesh
     if (target.material && 'color' in target.material) {
-      ;(target.material as THREE.MeshStandardMaterial).color.set(tileColor)
-      ;(target.material as THREE.MeshStandardMaterial).emissiveIntensity = 0.08
+      (target.material as THREE.MeshStandardMaterial).color.set(tileColor)
+      (target.material as THREE.MeshStandardMaterial).emissiveIntensity = 0.08
     }
     setHovered(false)
   }, [tileColor])
 
-  // Show indicators based on hover and tool
   const showIndicator = hovered && (
     (selectedTool === "buy" && tile.type === "empty") ||
     (selectedTool === "buy" && tile.type !== "empty" && tile.owner === playerName) ||
@@ -521,8 +555,13 @@ function GameTile({
 
       {/* Tile content */}
       {tile.type === "crop" && <CropComponent tile={tile} plantScale={plantScale} />}
-      {tile.type === "money-tree" && <MoneyTree />}
+      {tile.type === "money-tree" && <GLBpowerModel path="/power.glb" />}
       {tile.type === "water" && <WaterTile />}
+
+      {/* NEW — Render tree model */}
+      {tile.type === "tree" && tile.treeType && (
+        <GLBTreeModel path={treeGLBPaths[tile.treeType]} />
+      )}
 
       {/* Growth progress bar */}
       {tile.type === "crop" && (
@@ -566,6 +605,7 @@ function GameTile({
     </group>
   )
 }
+
 
 function DecorationElements() {
   const decorations = useMemo(() => ({
@@ -709,7 +749,7 @@ export default function GameWorld({
       />
 
       {/* Realistic sky */}
-      <Sky sunPosition={[100, 100, 100]} />
+      {/* <Sky sunPosition={[100, 100, 100]} /> */}
 
       {/* Houses near corners */}
       <Suspense fallback={null}>
